@@ -39,7 +39,7 @@ jobs:
       # Install pip and dependencies
       - name: Install dependencies
         run: |
-          brew install chromedriver
+          sudo apt install chromium-chromedriver
 
       # Run tests with maven
       - name: Test with maven
