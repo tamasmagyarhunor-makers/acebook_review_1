@@ -22,10 +22,10 @@ public class DirectMessage {
 
     public DirectMessage() {}
 
- public DirectMessage(String content, Long senderId, Long recipientId, LocalDateTime dateTime) {
+ public DirectMessage(String content, String senderId, String recipientId, LocalDateTime dateTime) {
        this.message = content;
-        this.sender_id = senderId.toString();
-        this.recipient_id = recipientId.toString();
+        this.sender_id = senderId;
+        this.recipient_id = recipientId;
         this.timestamp = dateTime != null ? dateTime : LocalDateTime.now();
     }
     public DirectMessage(String message) {this.message = message;}
