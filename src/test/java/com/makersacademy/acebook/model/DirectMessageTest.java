@@ -9,6 +9,6 @@ public class DirectMessageTest {
 
     private DirectMessage directMessage = new DirectMessage("hi how are you");
     @Test
-    public void sendDirectMessage() {assertThat(directMessage.getMessage(), containsString("hi how are you")); }
+    public void sendDirectMessage() {assertThat(directMessage.getContent(), containsString("hi how are you")); }
 
 }
