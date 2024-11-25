@@ -53,7 +53,7 @@ jobs:
           echo "OKTA_ISSUER=$OKTA_ISSUER"
 
       # Run tests with maven
-      - name: Test with maven
+      - name: Setup db and run server in background
         env:
           PGPASSWORD: postgres
           POSTGRES_USER: postgres
@@ -63,5 +63,8 @@ jobs:
         run: |
           PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres acebook_springboot_development
           PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres acebook_springboot_test
-          mvn spring-boot:run
+          mvn spring-boot:run &
+      - name: Test with maven
+        run: |
+          sleep 5
           mvn test
