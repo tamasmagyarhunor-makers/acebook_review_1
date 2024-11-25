@@ -1,0 +1,70 @@
+# The name of the workflow
+name: Test
+
+# This workflow will run on any push to the repository
+on: push
+
+jobs:
+  test:
+    # Set up the virtual machine for testing
+    runs-on: ubuntu-latest
+
+    services:
+      # Configure PostgreSQL service
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        # Give PostgreSQL some time to initialize
+        options: >-
+          --health-cmd="pg_isready -d postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      # Install pip and dependencies
+      - name: Install dependencies
+        run: |
+          sudo apt install chromium-chromedriver
+
+      - name: Set Auth0 environment variables
+        run: |
+          echo "OKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "OKTA_ISSUER=${{ secrets.OKTA_ISSUER }}" >> $GITHUB_ENV
+
+      - name: Verify environment variables
+        run: |
+          echo "OKTA_CLIENT_ID=$OKTA_CLIENT_ID"
+          echo "OKTA_CLIENT_SECRET=$OKTA_CLIENT_SECRET"
+          echo "OKTA_ISSUER=$OKTA_ISSUER"
+
+      # Run tests with maven
+      - name: Setup db and run server in background
+        env:
+          PGPASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+        run: |
+          PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres acebook_springboot_development
+          PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres acebook_springboot_test
+          mvn spring-boot:run &
+      - name: Test with maven
+        run: |
+          sleep 5
+          mvn test
