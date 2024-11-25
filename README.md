@@ -19,6 +19,14 @@ Below, you'll find specific learning objectives for each tool.
 - Install Maven `brew install maven`
 - [Set up Auth0](https://journey.makers.tech/pages/auth0) (you only need the "Create an Auth0 app" section)
   - NOTE: Each member of the team will need their own Auth0 app
+  - Create your own .env file in the root directory with the following variables referenced from your Auth0 app:
+```env
+OKTA_ISSUER=[https://<your_apps_domain>]
+OKTA_CLIENT_ID=[your_apps_client_id]
+OKTA_CLIENT_SECRET=[your_app_client_secret]
+```
+  - From the Auth0 dashboard, add to Allowed Callback URLs: http://localhost:8080/login/oauth2/code/okta
+  - Add to Allowed Logout URLs: http://localhost:8080
 - Build the app and start the server, using the Maven command `mvn spring-boot:run`
 > The database migrations will run automatically at this point
 - Visit `http://localhost:8080/` to sign up
