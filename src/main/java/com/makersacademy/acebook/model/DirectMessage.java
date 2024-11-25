@@ -15,7 +15,7 @@ public class DirectMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
-    private String message;
+    private String content;
     private String sender_id;
     private String recipient_id;
     private LocalDateTime timestamp;
@@ -23,13 +23,13 @@ public class DirectMessage {
     public DirectMessage() {}
 
  public DirectMessage(String content, String senderId, String recipientId, LocalDateTime dateTime) {
-       this.message = content;
+       this.content = content;
         this.sender_id = senderId;
         this.recipient_id = recipientId;
         this.timestamp = dateTime != null ? dateTime : LocalDateTime.now();
     }
-    public DirectMessage(String message) {this.message = message;}
+    public DirectMessage(String content) {this.content = content;}
 
-    public String getMessage() {return this.message; }
-    public void  setMessage(String message) { this.message = message; }
+    public String getContent() {return this.content; }
+    public void  setContent(String content) { this.content = content; }
 }
