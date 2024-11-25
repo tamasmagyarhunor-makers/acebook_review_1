@@ -40,6 +40,18 @@ jobs:
         run: |
           sudo apt install chromium-chromedriver
 
+      - name: Set Auth0 environment variables
+        run: |
+          echo "OKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "OKTA_ISSUER=${{ secrets.OKTA_ISSUER }}" >> $GITHUB_ENV
+
+      - name: Verify environment variables
+        run: |
+          echo "OKTA_CLIENT_ID=$OKTA_CLIENT_ID"
+          echo "OKTA_CLIENT_SECRET=$OKTA_CLIENT_SECRET"
+          echo "OKTA_ISSUER=$OKTA_ISSUER"
+
       # Run tests with maven
       - name: Test with maven
         env:
