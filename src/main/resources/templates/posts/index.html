@@ -3,25 +3,25 @@
           xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
     <head lang="en"  th:replace="~{core/head :: head}"></head>
     <body>
-    <div th:replace="~{core/navbar :: nav}"></div>
+
+    <div th:replace="~{core/navbar :: div}"></div>
 
     <div class="container">
-        <div th:replace="~{core/sidebar :: aside}"></div>
-        <div id="feed">
-            <h1>Posts</h1>
-
-            <div sec:authorize="isAuthenticated()" id="greeting">
-                Signed in as <span sec:authentication="principal.attributes['email']"></span>
+        <div th:replace="~{core/sidebar :: div}"></div>
+        <div id="feed" class="container-posts">
+            <div class="card post-something">
+                <form class="form-post" th:action="@{/posts}" th:object="${post}" method="post">
+                    <h3><i class="fa-regular fa-message"></i></h3>
+                    <input type="text"
+                           class="input-post"
+                           th:field="*{content}"
+                           th:placeholder="'What\'s on your mind, ' + ${#authentication.principal.attributes['nickname']} + '?'"
+                    />
+                    <input type="submit" class="submit-post" value="post!" />
+                </form>
             </div>
 
-            <form action="#" th:action="@{/posts}" th:object="${post}" method="post">
-                <p>Content: <input type="text" th:field="*{content}" /></p>
-                <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-            </form>
-
-            <ul th:each="post: ${posts}">
-                <li th:text="${post.content}" />
-            </ul>
+            <div th:replace="~{posts/post_container :: div}"></div>
         </div>
     </div>
 
