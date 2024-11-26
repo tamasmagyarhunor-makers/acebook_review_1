@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface PostRepository extends CrudRepository<Post, Long> {
     @Query("SELECT new com.makersacademy.acebook.dto.PostWithNickname(" +
             "p.id, p.content, p.userId, p.friendsOnly, p.dateTime, u.nickname) " +
-            "FROM Post p JOIN User u ON p.userId = u.auth0Id")
+            "FROM Post p JOIN User u ON p.userId = u.auth0Id " +
+            "ORDER BY p.dateTime DESC")
     public Iterable<PostWithNickname> findAllWithNicknames();
 }

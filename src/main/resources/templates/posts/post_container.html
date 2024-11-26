@@ -4,7 +4,7 @@
             <div class="card-top">
                 <div class="poster-info">
                     <h3><span th:text="${post.nickname}"></span> posted</h3>
-                    <p>36 minutes ago</p>
+                    <p th:text="${post.timeSince(currentTime)}"></p>
                 </div>
                 <p class="post-content" th:text="${post.content}"></p>
             </div>
