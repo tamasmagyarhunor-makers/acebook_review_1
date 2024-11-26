@@ -12,6 +12,9 @@
             <div class="card post-something">
                 <form class="form-post" th:action="@{/posts}" th:object="${post}" method="post">
                     <h3><i class="fa-regular fa-message"></i></h3>
+                    <input type="hidden" th:attr="name='user_id'" th:value="${#authentication.principal.attributes['sub']}">
+                    <input type="hidden" th:attr="name='friends_only'" th:value="true">
+                    <input type="hidden" th:attr="name='date_time'" th:value="${currentTime}">
                     <input type="text"
                            class="input-post"
                            th:field="*{content}"
@@ -20,7 +23,6 @@
                     <input type="submit" class="submit-post" value="post!" />
                 </form>
             </div>
-
             <div th:replace="~{posts/post_container :: div}"></div>
         </div>
     </div>
