@@ -2,9 +2,7 @@ package com.makersacademy.acebook.model;
 
 import jakarta.persistence.*;
 
-import javassist.LoaderClassPath;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -38,8 +36,9 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
+    // everything beneath this line: I know. But lombok isn't handling these setters correctly.
+
     public User() {
-        // Default constructor required by Hibernate
     }
 
     public void setNickname(String nickname) {
