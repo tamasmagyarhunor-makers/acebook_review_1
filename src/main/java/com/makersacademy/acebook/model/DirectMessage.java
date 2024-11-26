@@ -1,15 +1,13 @@
 package com.makersacademy.acebook.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import java.time.LocalDateTime;
 
 
-
-@Data
 @Entity
-@Table(name = "MESSAGES")
-
+@Getter @Setter @NoArgsConstructor
+@Table(name = "DIRECT_MESSAGES")
 public class DirectMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,19 +15,13 @@ public class DirectMessage {
     private Long id;
     private String content;
     private String sender_id;
-    private String recipient_id;
-    private LocalDateTime timestamp;
+    private String receiver_id;
+    private LocalDateTime date_time;
 
-    public DirectMessage() {}
-
- public DirectMessage(String content, String senderId, String recipientId, LocalDateTime dateTime) {
-       this.content = content;
+    public DirectMessage(String content, String senderId, String receiverId, LocalDateTime dateTime) {
+        this.content = content;
         this.sender_id = senderId;
-        this.recipient_id = recipientId;
-        this.timestamp = dateTime != null ? dateTime : LocalDateTime.now();
+        this.receiver_id = receiverId;
+        this.date_time = dateTime;
     }
-    public DirectMessage(String content) {this.content = content;}
-
-    public String getContent() {return this.content; }
-    public void  setContent(String content) { this.content = content; }
 }
