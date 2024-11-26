@@ -4,16 +4,16 @@
             <div class="card-top">
                 <div class="poster-info">
                     <h3><span th:text="${post.nickname}"></span> posted</h3>
-                    <p th:text="${post.timeSince(currentTime)}"></p>
+                    <h5 th:text="${post.timeSince(currentTime)}"></h5>
                 </div>
                 <p class="post-content" th:text="${post.content}"></p>
             </div>
             <div class="card-bottom">
-                <div class="post-interaction">
+                <div class="icon-group">
                     <a href="#"><i class="fa-regular fa-thumbs-up"></i></a>
                     <p>Like</p>
                 </div>
-                <div class="post-interaction">
+                <div class="icon-group">
                     <a href="#"><i class="fa-regular fa-comment"></i></a>
                     <p>Comment</p>
                 </div>
