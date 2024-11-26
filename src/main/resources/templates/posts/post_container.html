@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-top">
                 <div class="poster-info">
-                    <h3>Joseph posted</h3>
+                    <h3><span th:text="${post.nickname}"></span> posted</h3>
                     <p>36 minutes ago</p>
                 </div>
                 <p class="post-content" th:text="${post.content}"></p>
