@@ -21,5 +21,5 @@ public interface FriendsRepository extends CrudRepository<Friend, Long> {
     @Query("SELECT f FROM Friend f WHERE (f.id.userA = :userA " +
             "AND f.id.userB IN (SELECT f2.id.userB FROM Friend f2 WHERE f2.id.userA = :userB)) " +
             "OR (f.id.userB = :userA AND f.id.userA IN (SELECT f2.id.userA FROM Friend f2 WHERE f2.id.userB = :userB))")
-    List<Friend> findCommonFriends(@Param("userA") String user_a, @Param("userB") String user_b );
+    List<Friend> findCommonFriends(@Param("userA") String userA, @Param("userB") String userB );
         }
