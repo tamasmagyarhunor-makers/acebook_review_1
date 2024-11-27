@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 import static java.lang.Boolean.TRUE;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "USERS")
 public class User {
     @Id
@@ -37,15 +35,20 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
-    // everything beneath this line: I know. But lombok isn't handling these setters correctly.
-
     public User() {
     }
 
+    public Long getId() {return this.id;}
+    public void setId(Long id) {this.id = id;}
+    public String getAuth0Id() {return this.auth0Id;}
+    public void setAuth0Id(String auth0Id) {this.auth0Id = auth0Id;}
+    public boolean getEnabled() {return this.enabled;}
+    public void setEnabled(boolean enabled) {this.enabled = enabled;}
+    public String getNickname() {return this.nickname;}
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-
+    public LocalDateTime getLastLogin() {return this.lastLogin;}
     public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
     }
