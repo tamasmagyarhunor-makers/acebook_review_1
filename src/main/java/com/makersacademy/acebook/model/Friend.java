@@ -3,6 +3,7 @@ package com.makersacademy.acebook.model;
 import jakarta.persistence.*;
 import lombok.*;
 import com.makersacademy.acebook.dto.FriendId;
+
 @Entity
 @Getter
 @Setter
