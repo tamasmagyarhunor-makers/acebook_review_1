@@ -1,5 +1,6 @@
 package com.makersacademy.acebook.controller;
 
+import com.makersacademy.acebook.dto.PostWithNickname;
 import com.makersacademy.acebook.model.Post;
 import com.makersacademy.acebook.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 public class PostsController {
@@ -19,10 +19,11 @@ public class PostsController {
 
     @GetMapping("/posts")
     public String index(Model model) {
-        Iterable<Post> posts = repository.findAll();
+        Iterable<PostWithNickname> posts = repository.findAllWithNicknames();
         model.addAttribute("posts", posts);
         model.addAttribute("post", new Post());
         model.addAttribute("currentTime", LocalDateTime.now());
+
         return "posts/index";
     }
 
