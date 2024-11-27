@@ -2,13 +2,8 @@ package com.makersacademy.acebook.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Getter @Setter
-//@NoArgsConstructor
 @Table(name = "POSTS")
 public class Post {
 
@@ -29,4 +24,25 @@ public class Post {
         this.dateTime = dateTime;
     }
 
+    public Long getId() {return this.id;}
+
+    public void setId(Long id) {this.id = id;}
+
+    public String getUserId() {return this.userId;}
+
+    public void setUserId(String userId) {this.userId = userId;}
+
+    public String getContent() {return this.content;}
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Boolean getFriendsOnly() {return this.friendsOnly;}
+
+    public void setFriendsOnly(Boolean friendsOnly) {this.friendsOnly = friendsOnly;}
+
+    public LocalDateTime getDateTime() {return this.dateTime;}
+
+    public void setDateTime(LocalDateTime dateTime) {this.dateTime = dateTime;}
 }

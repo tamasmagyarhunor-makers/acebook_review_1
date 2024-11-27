@@ -1,13 +1,8 @@
 package com.makersacademy.acebook.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-@Getter @Setter @NoArgsConstructor
 public class PostWithNickname {
     private Long id;
     private String content;
@@ -24,6 +19,22 @@ public class PostWithNickname {
         this.dateTime = dateTime;
         this.nickname = nickname;
     }
+
+    public PostWithNickname() {};
+
+    public Long getId() {return this.id;}
+    public String getContent() {return this.content;}
+    public String getUserId() {return this.userId;}
+    public Boolean getFriendsOnly() {return this.friendsOnly;}
+    public LocalDateTime getDateTime() {return this.dateTime;}
+    public String getNickname() {return this.nickname;}
+
+    public void setId(Long id) {this.id = id;}
+    public void setContent(String content) {this.content = content;}
+    public void setUserId(String userId) {this.userId = userId;}
+    public void setFriendsOnly(boolean friendsOnly) {this.friendsOnly = friendsOnly;}
+    public void setDateTime(LocalDateTime dateTime) {this.dateTime = dateTime;}
+    public void setNickname(String nickname) {this.nickname = nickname;}
 
     public String timeSince(LocalDateTime currentTime) {
         Duration duration = Duration.between(dateTime, currentTime);
