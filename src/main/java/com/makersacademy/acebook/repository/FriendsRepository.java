@@ -9,9 +9,6 @@ import java.util.List;
 
 
 public interface FriendsRepository extends CrudRepository<Friend, Long> {
-    //To count friends
-    @Query("SELECT COUNT(f) FROM Friend f")
-    long countTotalFriendships();
 
     //To remove a friend
     @Query("DELETE FROM Friend f WHERE (f.id.userA = :userA AND f.id.userB = :userB) OR (f.id.userA = :userB AND f.id.userB = :userA)")
