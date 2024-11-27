@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name = "friends")
-public class Friend {
+public class Friends {
     private String user_a;
     private String user_b;
 
