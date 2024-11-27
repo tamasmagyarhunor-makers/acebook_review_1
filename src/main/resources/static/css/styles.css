@@ -18,6 +18,10 @@ h5 {
     font-weight: normal;
 }
 
+a {
+    text-decoration: none;
+}
+
 .container {
     display: flex;
     width: 100vw;
@@ -106,7 +110,6 @@ h5 {
 }
 
 .menu-links li a {
-    text-decoration: none;
     color: black;
 }
 
@@ -143,6 +146,30 @@ h5 {
 .sub-menu > * {
     color: black;
     margin: 0 8px;
+}
+
+/* MAIN WINDOW */
+
+.main-window {
+    margin: 32px;
+    box-sizing: content-box;
+    width: 100%;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.section-header a {
+    color: black;
+}
+
+.section-card {
+    height: 480px;
+    width: 240px;
+
 }
 
 /* FRIENDS */
