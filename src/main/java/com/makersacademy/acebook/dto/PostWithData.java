@@ -3,24 +3,26 @@ package com.makersacademy.acebook.dto;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class PostWithNickname {
+public class PostWithData {
     private Long id;
     private String content;
     private String userId;
     private Boolean friendsOnly;
     private LocalDateTime dateTime;
     private String nickname;
+    private boolean liked;
 
-    public PostWithNickname(Long id, String content, String userId, Boolean friendsOnly, LocalDateTime dateTime, String nickname) {
+    public PostWithData(Long id, String content, String userId, Boolean friendsOnly, LocalDateTime dateTime, String nickname, boolean liked) {
         this.id = id;
         this.userId = userId;
         this.content = content;
         this.friendsOnly = friendsOnly;
         this.dateTime = dateTime;
         this.nickname = nickname;
+        this.liked = liked;
     }
 
-    public PostWithNickname() {};
+    public PostWithData() {};
 
     public Long getId() {return this.id;}
     public String getContent() {return this.content;}
@@ -28,6 +30,7 @@ public class PostWithNickname {
     public Boolean getFriendsOnly() {return this.friendsOnly;}
     public LocalDateTime getDateTime() {return this.dateTime;}
     public String getNickname() {return this.nickname;}
+    public boolean getLiked() {return this.liked;}
 
     public void setId(Long id) {this.id = id;}
     public void setContent(String content) {this.content = content;}
@@ -35,6 +38,7 @@ public class PostWithNickname {
     public void setFriendsOnly(boolean friendsOnly) {this.friendsOnly = friendsOnly;}
     public void setDateTime(LocalDateTime dateTime) {this.dateTime = dateTime;}
     public void setNickname(String nickname) {this.nickname = nickname;}
+    public void setLiked(boolean liked) {this.liked = liked;}
 
     public String timeSince(LocalDateTime currentTime) {
         Duration duration = Duration.between(dateTime, currentTime);
