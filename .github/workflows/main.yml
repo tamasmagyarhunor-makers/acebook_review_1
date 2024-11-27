@@ -35,10 +35,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # Install pip and dependencies
-      - name: Install dependencies
-        run: |
-          sudo apt install chromium-chromedriver
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          install-chromedriver: true
+      - name: Test Chrome version
+        run: chrome --version
 
       - name: Set Auth0 environment variables
         run: |
@@ -66,5 +68,4 @@ jobs:
           mvn spring-boot:run &
       - name: Test with maven
         run: |
-          sleep 5
           mvn test
