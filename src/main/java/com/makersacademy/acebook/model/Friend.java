@@ -1,4 +1,4 @@
-package com.makers.acebook.model;
+package com.makersacademy.acebook.model;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
