@@ -10,11 +10,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name = "friend_requests")
-public class friend_requests {
+public class FriendRequest {
     private String requesting_user;
     private String requested_user;
 
-    public friend_requests(String requesting_user, String requested_user) {
+    public FriendRequest(String requesting_user, String requested_user) {
         this.requesting_user = requesting_user;
         this.requesting_user = requested_user;
     }
