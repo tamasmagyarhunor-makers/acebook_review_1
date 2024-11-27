@@ -14,7 +14,7 @@ public class Friend {
     private FriendId id;  // Composite primary key
 
     // Additional constructors if needed
-    public Friend(String user_a, String user_b) {
-        this.id = new FriendId(user_a, user_b);
+    public Friend(String userA, String userB) {
+        this.id = new FriendId(userA, userB);
     }
 }

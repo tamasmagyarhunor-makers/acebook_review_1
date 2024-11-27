@@ -14,12 +14,12 @@ public interface FriendsRepository extends CrudRepository<Friend, Long> {
     long countTotalFriendships();
 
     //To remove a friend
-    @Query("DELETE FROM Friend f WHERE (f.id.user_a = :userA AND f.id.user_b = :userB) OR (f.id.user_a = :userB AND f.id.user_b = :userA)")
+    @Query("DELETE FROM Friend f WHERE (f.id.userA = :userA AND f.id.userB = :userB) OR (f.id.userA = :userB AND f.id.userB = :userA)")
     void deleteFriendship(@Param("userA") String userA, @Param("userB") String userB);
 
     //To check for mutual friends
-    @Query("SELECT f FROM Friend f WHERE (f.id.user_a = :userA " +
-            "AND f.id.user_b IN (SELECT f2.id.user_b FROM Friend f2 WHERE f2.id.user_a = :userB)) " +
-            "OR (f.id.user_b = :userA AND f.id.user_a IN (SELECT f2.id.user_a FROM Friend f2 WHERE f2.id.user_b = :userB))")
+    @Query("SELECT f FROM Friend f WHERE (f.id.userA = :userA " +
+            "AND f.id.userB IN (SELECT f2.id.userB FROM Friend f2 WHERE f2.id.userA = :userB)) " +
+            "OR (f.id.userB = :userA AND f.id.userA IN (SELECT f2.id.userA FROM Friend f2 WHERE f2.id.userB = :userB))")
     List<Friend> findCommonFriends(@Param("userA") String user_a, @Param("userB") String user_b );
         }
