@@ -12,7 +12,7 @@ public class Friends {
     @Id
     private String userB;
 
-    public Friend(String userA, String userB) {
+    public Friends(String userA, String userB) {
         this.userA = userA;
         this.userB = userB;
     }
