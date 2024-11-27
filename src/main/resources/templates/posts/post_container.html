@@ -1,6 +1,6 @@
 <div class="feed">
     <div th:each="post: ${posts}">
-        <div class="card">
+        <div class="card" th:id="'post-' + ${post.id}">
             <div class="card-top">
                 <div class="poster-info">
                     <h3><span th:text="${post.nickname}"></span> posted</h3>
@@ -9,9 +9,13 @@
                 <p class="post-content" th:text="${post.content}"></p>
             </div>
             <div class="card-bottom">
-                <div class="icon-group">
-                    <a href="#"><i class="fa-regular fa-thumbs-up"></i></a>
+                <div class="icon-group like-group">
+                    <a href="#" class="like-button"><i class="fa-regular fa-thumbs-up"></i></a>
                     <p>Like</p>
+                </div>
+                <div class="icon-group liked-group hidden">
+                    <a href="#" class="liked-button"><i class="fa-solid fa-thumbs-up"></i></a>
+                    <p>Liked</p>
                 </div>
                 <div class="icon-group">
                     <a href="#"><i class="fa-regular fa-comment"></i></a>
@@ -20,4 +24,43 @@
             </div>
         </div>
     </div>
+
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const likeButtons = document.querySelectorAll('.like-button');
+            const likedButtons = document.querySelectorAll('.liked-button');
+
+            likeButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // Don't reload the page.
+
+                    const card = button.closest('.card');
+
+                    console.log(`You just liked the post ${card.id}`);
+
+                    const likeGroup = card.querySelector('.like-group');
+                    const likedGroup = card.querySelector('.liked-group');
+
+                    likeGroup.classList.toggle('hidden');
+                    likedGroup.classList.toggle('hidden');
+                });
+            });
+
+            likedButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // Don't reload the page.
+
+                    const card = button.closest('.card');
+
+                    console.log(`You just unliked the post ${card.id}`);
+
+                    const likeGroup = card.querySelector('.like-group');
+                    const likedGroup = card.querySelector('.liked-group');
+
+                    likeGroup.classList.toggle('hidden');
+                    likedGroup.classList.toggle('hidden');
+                });
+            });
+        });
+    </script>
 </div>
