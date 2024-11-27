@@ -1,18 +1,43 @@
-package com.makers.acebook.model;
+package com.makersacademy.acebook.model;
+
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.io.Serializable;
+
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@Table(name = "friends")
+@Table(name = "FRIENDS")
+@IdClass(Friends.FriendsId.class)
 public class Friends {
-    private String user_a;
-    private String user_b;
-    public Friends(String user_a, String user_b) {
-        this.user_a = user_a;
-        this.user_b = user_b;
+    @Id
+    private String userA;
+    @Id
+    private String userB;
+
+    public Friend(String userA, String userB) {
+        this.userA = userA;
+        this.userB = userB;
+    }
+
+    public Friends() {}
+
+    public String getUserA() {return this.userA;}
+    public String getUserB() {return this.userB;}
+    public void setUserA(String userA) {this.userA = userA;}
+    public void setUserB(String userB) {this.userB = userB;}
+
+    public static final class FriendsId implements Serializable {
+        private String userA;
+        private String userB;
+
+        public FriendsId(String userA, String userB) {
+            this.userA = userA;
+            this.userB = userB;
+        }
+
+        public FriendsId() {}
+
+        public String getUserA() {return this.userA;}
+        public String getUserB() {return this.userB;}
+        public void setUserA(String userA) {this.userA = userA;}
+        public void setUserB(String userB) {this.userB = userB;}
     }
 }
