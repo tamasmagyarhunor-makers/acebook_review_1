@@ -2,18 +2,19 @@ package com.makersacademy.acebook.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import com.makersacademy.acebook.dto.CommentId;
 
 @Entity
 @Table(name = "COMMENTS")
-@IdClass(CommentId.class)
 public class Comment {
-    @Id
-    @JoinColumn(name = "user_id")
-    private String userId;
 
     @Id
-    @JoinColumn(name = "post_Id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "user_id")
+    private String userId;
+
+    @Column(name = "post_id")
     private Long postId;
 
     @Column(name = "comments")
@@ -27,6 +28,13 @@ public class Comment {
         this.postId = postId;
         this.comments = comments;
         this.timestamp = timestamp;
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserId() {
