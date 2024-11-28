@@ -1,12 +1,9 @@
 package com.makersacademy.acebook.dto;
 
 import com.makersacademy.acebook.model.User;
-import com.makersacademy.acebook.repository.UserRepository;
-import com.makersacademy.acebook.service.PostDataService;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.List;
 
 public class PostWithData {
@@ -65,41 +62,5 @@ public class PostWithData {
         } else {
             return (minutes / 1440) + " days ago";
         }
-    }
-
-    public String getLikedString(String currentUserId) {
-        StringBuilder likedString = new StringBuilder();
-        List<User> users = getUsersWhoLiked();
-
-        int count = 0;
-        int total = users.size();
-
-        // If currentUser likes this post, 'You' goes at the front of the string.
-        if (liked) {
-            count++;
-            likedString
-                    .append("You")
-                    .append(getJoinString(total - count));
-        }
-
-        for (User user : users) {
-            if (user.getAuth0Id().equals(currentUserId)) continue; // skip the currentUser
-            count++;
-            likedString
-                    .append(user.getNickname())
-                    .append(getJoinString(total - count));
-        }
-
-        likedString.append("liked this");
-        return total > 0 ? likedString.toString() : "";
-    }
-
-    public List<User> getUsersWhoLiked() {
-        PostDataService postDataService = new PostDataService();
-        return postDataService.getUsersWhoLiked(id);
-    }
-
-    private String getJoinString(int itemsRemaining) {
-        return itemsRemaining > 1 ? ", " : itemsRemaining == 1 ? " and " : " ";
     }
 }

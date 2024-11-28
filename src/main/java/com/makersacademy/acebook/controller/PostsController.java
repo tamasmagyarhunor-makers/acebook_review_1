@@ -1,10 +1,11 @@
 package com.makersacademy.acebook.controller;
 
+import com.makersacademy.acebook.dto.LikesHandler;
 import com.makersacademy.acebook.dto.PostWithData;
-import com.makersacademy.acebook.model.Like;
 import com.makersacademy.acebook.model.Post;
 import com.makersacademy.acebook.repository.LikeRepository;
 import com.makersacademy.acebook.repository.PostRepository;
+import com.makersacademy.acebook.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,10 @@ public class PostsController {
 
     @Autowired
     PostRepository repository;
-
     @Autowired
     LikeRepository likeRepository;
+    @Autowired
+    UserRepository userRepository;
 
     private String getCurrentUser() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
@@ -33,6 +35,7 @@ public class PostsController {
         model.addAttribute("posts", posts);
         model.addAttribute("post", new Post());
         model.addAttribute("currentTime", LocalDateTime.now());
+        model.addAttribute("likesHandler", new LikesHandler(userRepository, getCurrentUser()));
 
         return "posts/index";
     }
