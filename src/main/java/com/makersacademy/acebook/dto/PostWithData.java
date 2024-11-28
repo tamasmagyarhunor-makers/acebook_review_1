@@ -1,7 +1,10 @@
 package com.makersacademy.acebook.dto;
 
+import com.makersacademy.acebook.model.User;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PostWithData {
     private Long id;
@@ -24,21 +27,21 @@ public class PostWithData {
 
     public PostWithData() {};
 
-    public Long getId() {return this.id;}
-    public String getContent() {return this.content;}
-    public String getUserId() {return this.userId;}
-    public Boolean getFriendsOnly() {return this.friendsOnly;}
-    public LocalDateTime getDateTime() {return this.dateTime;}
-    public String getNickname() {return this.nickname;}
-    public boolean getLiked() {return this.liked;}
+    public Long getId() { return id; }
+    public String getContent() { return content; }
+    public String getUserId() { return userId; }
+    public Boolean getFriendsOnly() { return friendsOnly; }
+    public LocalDateTime getDateTime() { return dateTime; }
+    public String getNickname() { return nickname; }
+    public boolean getLiked() { return liked; }
 
-    public void setId(Long id) {this.id = id;}
-    public void setContent(String content) {this.content = content;}
-    public void setUserId(String userId) {this.userId = userId;}
-    public void setFriendsOnly(boolean friendsOnly) {this.friendsOnly = friendsOnly;}
-    public void setDateTime(LocalDateTime dateTime) {this.dateTime = dateTime;}
-    public void setNickname(String nickname) {this.nickname = nickname;}
-    public void setLiked(boolean liked) {this.liked = liked;}
+    public void setId(Long id) { this.id = id; }
+    public void setContent(String content) { this.content = content; }
+    public void setUserId(String userId) { this.userId = userId; }
+    public void setFriendsOnly(boolean friendsOnly) { this.friendsOnly = friendsOnly; }
+    public void setDateTime(LocalDateTime dateTime) { this.dateTime = dateTime; }
+    public void setNickname(String nickname) { this.nickname = nickname; }
+    public void setLiked(boolean liked) { this.liked = liked; }
 
     public String timeSince(LocalDateTime currentTime) {
         Duration duration = Duration.between(dateTime, currentTime);

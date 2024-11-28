@@ -7,6 +7,7 @@
                     <h5 th:text="${post.timeSince(currentTime)}"></h5>
                 </div>
                 <p class="post-content" th:text="${post.content}"></p>
+                <h5 th:text="${likesHandler.getLikedString(post.id, post.liked)}"></h5>
             </div>
             <div class="card-bottom">
                 <div class="icon-group like-group">
