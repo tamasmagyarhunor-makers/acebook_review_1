@@ -349,4 +349,11 @@ a {
     font-size: 20px;
 }
 
+.who-liked-this {
+    margin-top: 16px;
+}
+
+.who-liked-this:empty {
+    margin-top: 0 !important;
+}
 
