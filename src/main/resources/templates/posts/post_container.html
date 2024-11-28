@@ -26,6 +26,7 @@
     </div>
 
     <script th:inline="javascript">
+        const protocol = window.location.protocol;
         const root = window.location.host;
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -49,7 +50,7 @@
                 likeButton.addEventListener('click', function(event) {
                     event.preventDefault(); // Don't reload the page.
 
-                    fetch(`http://${root}/likes/${postId}`, {
+                    fetch(`${protocol}//${root}/likes/${postId}`, {
                         method: 'POST'
                     })
                     .then(response => {
@@ -68,7 +69,7 @@
                 likedButton.addEventListener('click', function(event) {
                     event.preventDefault(); // Don't reload the page.
 
-                    fetch(`http://${root}/likes/${postId}`, {
+                    fetch(`${protocol}//${root}/likes/${postId}`, {
                         method: 'DELETE'
                     })
                     .then(response => {
