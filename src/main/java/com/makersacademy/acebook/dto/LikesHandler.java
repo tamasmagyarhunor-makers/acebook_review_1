@@ -47,7 +47,9 @@ public class LikesHandler {
             if (count == 2 && total > 3) {
                 likedString
                         .append(user.getNickname())
-                        .append(" and " + (total - 2) + " others ");
+                        .append(" and ")
+                        .append(total - 2)
+                        .append(" others ");
                 break;
             }
             likedString
