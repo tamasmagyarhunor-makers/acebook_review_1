@@ -5,23 +5,21 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "POSTS")
+@Table(name = "notifications")
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userId;
-    private String content;
-    private Boolean friendsOnly;
+    private String message;
     private LocalDateTime dateTime;
 
     public Notification() {
     }
 
-    public Notification(String userId, String content, Boolean friendsOnly, LocalDateTime dateTime) {
+    public Notification(String userId, String message, LocalDateTime dateTime) {
         this.userId = userId;
-        this.content = content;
-        this.friendsOnly = friendsOnly;
+        this.message = message;
         this.dateTime = dateTime;
     }
 
@@ -33,4 +31,26 @@ public class Notification {
         this.id = id;
     }
 
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }
