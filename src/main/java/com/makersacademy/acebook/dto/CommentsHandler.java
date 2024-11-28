@@ -1,25 +1,25 @@
 package com.makersacademy.acebook.dto;
 
-import com.makersacademy.acebook.repository.UserRepository;
+import com.makersacademy.acebook.repository.CommentRepository;
 
 import java.util.List;
 
 public class CommentsHandler {
-    private UserRepository userRepository;
+    private CommentRepository commentRepository;
     private String currentUser;
 
-    public CommentsHandler(UserRepository userRepository, String currentUser) {
-        this.userRepository = userRepository;
+    public CommentsHandler(CommentRepository commentRepository, String currentUser) {
+        this.commentRepository = commentRepository;
         this.currentUser = currentUser;
     }
 
-    public UserRepository getUserRepository() { return userRepository; }
+    public CommentRepository getCommentRepository() { return commentRepository; }
     public String getCurrentUser() { return currentUser; }
 
-    public void setUserRepository(UserRepository userRepository) { this.userRepository = userRepository; }
+    public void setCommentRepository(CommentRepository commentRepository) { this.commentRepository = commentRepository; }
     public void setCurrentUser(String currentUser) { this.currentUser = currentUser; }
 
     public List<CommentWithData> getCommentsWithData(Long postId) {
-        return userRepository.findUsersWhoLikedPost(postId);
+        return commentRepository.findAllCommentsWithData(postId);
     }
 }
