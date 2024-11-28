@@ -1,6 +1,6 @@
 <div class="feed">
     <div th:each="post: ${posts}">
-        <div class="card" th:id="'post-' + ${post.id}">
+        <div class="card" th:id="'post-' + ${post.id}" th:data-post-id="${post.id}" th:data-liked="${post.liked}">
             <div class="card-top">
                 <div class="poster-info">
                     <h3><span th:text="${post.nickname}"></span> posted</h3>
@@ -13,7 +13,7 @@
                     <a href="#" class="like-button"><i class="fa-regular fa-thumbs-up"></i></a>
                     <p>Like</p>
                 </div>
-                <div class="icon-group liked-group hidden">
+                <div class="icon-group liked-group">
                     <a href="#" class="liked-button"><i class="fa-solid fa-thumbs-up"></i></a>
                     <p>Liked</p>
                 </div>
@@ -26,36 +26,59 @@
     </div>
 
     <script th:inline="javascript">
+        const root = window.location.host;
+
         document.addEventListener('DOMContentLoaded', function() {
             const likeButtons = document.querySelectorAll('.like-button');
-            const likedButtons = document.querySelectorAll('.liked-button');
 
-            likeButtons.forEach(button => {
-                button.addEventListener('click', function(event) {
+            likeButtons.forEach(likeButton => {
+                const card = likeButton.closest('.card');
+                const likeGroup = card.querySelector('.like-group');
+                const likedGroup = card.querySelector('.liked-group');
+                const likedButton = likedGroup.querySelector('.liked-button');
+
+                const likedByUser = card.dataset.liked;
+                const postId = card.dataset.postId;
+
+                if (likedByUser == "true") {
+                    likeGroup.classList.add('hidden');
+                } else {
+                    likedGroup.classList.add('hidden');
+                }
+
+                likeButton.addEventListener('click', function(event) {
                     event.preventDefault(); // Don't reload the page.
 
-                    const card = button.closest('.card');
-
-                    console.log(`You just liked the post ${card.id}`);
-
-                    const likeGroup = card.querySelector('.like-group');
-                    const likedGroup = card.querySelector('.liked-group');
+                    fetch(`http://${root}/likes/${postId}`, {
+                        method: 'POST'
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Like processed successfully');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error processing like:', error);
+                    });
 
                     likeGroup.classList.toggle('hidden');
                     likedGroup.classList.toggle('hidden');
                 });
-            });
 
-            likedButtons.forEach(button => {
-                button.addEventListener('click', function(event) {
+                likedButton.addEventListener('click', function(event) {
                     event.preventDefault(); // Don't reload the page.
 
-                    const card = button.closest('.card');
-
-                    console.log(`You just unliked the post ${card.id}`);
-
-                    const likeGroup = card.querySelector('.like-group');
-                    const likedGroup = card.querySelector('.liked-group');
+                    fetch(`http://${root}/likes/${postId}`, {
+                        method: 'DELETE'
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Un-like processed successfully');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error processing un-like:', error);
+                    });
 
                     likeGroup.classList.toggle('hidden');
                     likedGroup.classList.toggle('hidden');

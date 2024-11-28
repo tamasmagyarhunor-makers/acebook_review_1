@@ -1,9 +1,12 @@
 package com.makersacademy.acebook.controller;
 
-import com.makersacademy.acebook.dto.PostWithNickname;
+import com.makersacademy.acebook.dto.PostWithData;
+import com.makersacademy.acebook.model.Like;
 import com.makersacademy.acebook.model.Post;
+import com.makersacademy.acebook.repository.LikeRepository;
 import com.makersacademy.acebook.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +20,16 @@ public class PostsController {
     @Autowired
     PostRepository repository;
 
+    @Autowired
+    LikeRepository likeRepository;
+
+    private String getCurrentUser() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
     @GetMapping("/posts")
     public String index(Model model) {
-        Iterable<PostWithNickname> posts = repository.findAllWithNicknames();
+        Iterable<PostWithData> posts = repository.findAllWithData(getCurrentUser());
         model.addAttribute("posts", posts);
         model.addAttribute("post", new Post());
         model.addAttribute("currentTime", LocalDateTime.now());
