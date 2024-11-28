@@ -7,7 +7,7 @@
                     <h5 th:text="${post.timeSince(currentTime)}"></h5>
                 </div>
                 <p class="post-content" th:text="${post.content}"></p>
-                <h5 th:text="${likesHandler.getLikedString(post.id, post.liked)}"></h5>
+                <h5 th:id="'likes-string-' + ${post.id}" class="who-liked-this" th:text="${likesHandler.getLikedString(post.id, post.liked)}"></h5>
             </div>
             <div class="card-bottom">
                 <div class="icon-group like-group">
@@ -41,6 +41,7 @@
 
                 const likedByUser = card.dataset.liked;
                 const postId = card.dataset.postId;
+                const likeString = document.getElementById(`likes-string-${postId}`)
 
                 if (likedByUser == "true") {
                     likeGroup.classList.add('hidden');
@@ -54,13 +55,12 @@
                     fetch(`${protocol}//${root}/likes/${postId}`, {
                         method: 'POST'
                     })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Like processed successfully');
-                        }
+                    .then(response => response.text())
+                    .then(newLikesText => {
+                        likeString.textContent = newLikesText;
                     })
                     .catch(error => {
-                        console.error('Error processing like:', error);
+                        console.error('Error:', error);
                     });
 
                     likeGroup.classList.toggle('hidden');
@@ -73,13 +73,12 @@
                     fetch(`${protocol}//${root}/likes/${postId}`, {
                         method: 'DELETE'
                     })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Un-like processed successfully');
-                        }
+                    .then(response => response.text())
+                    .then(newLikesText => {
+                        likeString.textContent = newLikesText;
                     })
                     .catch(error => {
-                        console.error('Error processing un-like:', error);
+                        console.error('Error:', error);
                     });
 
                     likeGroup.classList.toggle('hidden');
