@@ -1,6 +1,6 @@
 <div class="feed">
     <div th:each="post: ${posts}">
-        <div class="card" th:id="'post-' + ${post.id}" th:data-post-id="${post.id}" th:data-liked="${post.liked}">
+        <div class="card card-post" th:id="'post-' + ${post.id}" th:data-post-id="${post.id}" th:data-liked="${post.liked}">
             <div class="card-top">
                 <div class="poster-info">
                     <h3><span th:text="${post.nickname}"></span> posted</h3>
@@ -15,19 +15,17 @@
                         <h6 class="comment-body" th:text="${comment.content}"></h6>
                     </div>
                     <div class="comment-box">
-                        <form id="new-comment" class="form-post" th:action="@{/comments}" th:object="${comment}" method="POST">
+                        <form th:id="'new-comment-' + ${post.id}" class="form-post" th:action="@{/comments}" th:object="${comment}" method="POST">
                             <h3><i class="fa-regular fa-message"></i></h3>
                             <input type="hidden" th:attr="name='postId'" th:value="${post.id}">
                             <input type="hidden" th:attr="name='userId'" th:value="${#authentication.principal.attributes['sub']}">
                             <input type="hidden" th:attr="name='dateTime'" th:value="${currentTime}">
                             <input type="text"
-                                   id="comment-input"
                                    class="input-post"
                                    th:field="*{comments}"
                                    th:placeholder="'Write a comment...'"
                             />
                         </form>
-
                     </div>
                 </div>
 
@@ -42,7 +40,7 @@
                     <p>Liked</p>
                 </div>
                 <div class="icon-group">
-                    <a href="#" class="comments-button"><i class="fa-regular fa-comment"></i></a>
+                    <span class="comments-button"><i class="fa-regular fa-comment"></i></span>
                     <p>Comments</p>
                 </div>
             </div>
@@ -54,19 +52,22 @@
         const root = window.location.host;
 
         document.addEventListener('DOMContentLoaded', function() {
-            const likeButtons = document.querySelectorAll('.like-button');
+            const cards = document.querySelectorAll('.card-post');
 
-            likeButtons.forEach(likeButton => {
-                const card = likeButton.closest('.card');
+            cards.forEach(card => {
                 const likeGroup = card.querySelector('.like-group');
                 const likedGroup = card.querySelector('.liked-group');
+                const likeButton = likeGroup.querySelector('.like-button');
                 const likedButton = likedGroup.querySelector('.liked-button');
                 const commentsButton = card.querySelector('.comments-button');
                 const commentsSection = card.querySelector('.comments-section');
+                const commentBox = card.querySelector('.comment-box');
+                const commentForm = card.querySelector('.form-post');
+                const commentInput = card.querySelector('.input-post');
+                const likeString = card.querySelector('.who-liked-this');
 
                 const likedByUser = card.dataset.liked;
                 const postId = card.dataset.postId;
-                const likeString = document.getElementById(`likes-string-${postId}`)
 
                 if (likedByUser == "true") {
                     likeGroup.classList.add('hidden');
@@ -111,32 +112,43 @@
                 });
 
                 commentsButton.addEventListener('click', function(event) {
-                    event.preventDefault(); // Don't reload the page.
                     commentsSection.classList.toggle('hidden');
+                    const rect = commentsSection.getBoundingClientRect();
+
+                    const isInView =
+                        rect.top >= 0 &&
+                        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight);
+
+                    if (!commentsSection.classList.contains('hidden') && !isInView) {
+                        const offset = 64;
+                        const elementPosition = commentInput.getBoundingClientRect().top + window.scrollY;
+                        const offsetPosition = elementPosition - window.innerHeight + commentInput.offsetHeight + offset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
                 });
 
-                document.getElementById('new-comment').addEventListener('submit', function(e) {
+                commentForm.addEventListener('submit', function(e) {
                     e.preventDefault(); // Prevent form submission
 
                     const formData = new FormData(this);
 
                     fetch(this.action, {
                         method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
+                        body: formData
                     })
-                    .then(response => response.json())  // Expecting json response
+                    .then(response => response.json())
                     .then(comment => {
                         const newComment = document.createElement('div');
                         newComment.innerHTML = `
-                            <h5 class="comment-header">${comment.nickname} commented (${comment.timestring}):</h5>
+                            <h5 class="comment-header">${comment.nickname} commented (${comment.timeAgo}):</h5>
                             <h6 class="comment-body">${comment.content}</h6>
                         `;
-
-                        commentsSection.prepend(newComment);
-                        document.getElementById('comment-input').value = '';
+                        commentsSection.insertBefore(newComment, commentBox);
+                        commentInput.value = '';
                     })
                     .catch(error => {
                         console.error('Error:', error);

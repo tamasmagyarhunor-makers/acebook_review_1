@@ -10,6 +10,7 @@ public class CommentWithData {
     private String content;
     private LocalDateTime dateTime;
     private String nickname;
+    private String timeAgo;
 
     public CommentWithData(Long id, String userId, Long postId, String content, LocalDateTime dateTime, String nickname) {
         this.id = id;
@@ -28,6 +29,7 @@ public class CommentWithData {
     public String getContent() { return content; }
     public LocalDateTime getDateTime() { return dateTime; }
     public String getNickname() { return nickname; }
+    public String getTimeAgo() { return timeAgo; }
 
     public void setId(Long id) { this.id = id; }
     public void setUserId(String userId) { this.userId = userId; }
@@ -35,6 +37,7 @@ public class CommentWithData {
     public void setContent(String content) { this.content = content; }
     public void setDateTime(LocalDateTime dateTime) { this.dateTime = dateTime; }
     public void setNickname(String nickname) { this.nickname = nickname; }
+    public void setTimeAgo(String timeAgo) { this.timeAgo = timeAgo; }
 
     public String timeSince(LocalDateTime currentTime) {
         Duration duration = Duration.between(dateTime, currentTime);

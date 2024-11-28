@@ -28,12 +28,12 @@ public class CommentsController {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
-    @PostMapping(value = "/comments", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/comments")
     @ResponseBody
     public ResponseEntity<CommentWithData> create(@ModelAttribute Comment comment) {
         repository.save(comment);
         User user = userRepository.findUserByAuth0Id(comment.getUserId()).orElse(null);
-        String nickname = (user != null) ? user.getNickname() : "Anonymous";
+        String nickname = (user != null) ? user.getNickname() : "Anonymous user";
         CommentWithData commentWithData = new CommentWithData(
             comment.getId(),
             comment.getUserId(),
@@ -41,6 +41,7 @@ public class CommentsController {
             comment.getComments(),
             comment.getDateTime(),
             nickname);
+        commentWithData.setTimeAgo(commentWithData.timeSince(LocalDateTime.now()));
         return ResponseEntity.ok(commentWithData);
     }
 }
