@@ -8,6 +8,29 @@
                 </div>
                 <p class="post-content" th:text="${post.content}"></p>
                 <h5 th:id="'likes-string-' + ${post.id}" class="who-liked-this" th:text="${likesHandler.getLikedString(post.id, post.liked)}"></h5>
+
+                <div class="comments-section hidden">
+                    <div th:each="comment: ${commentsHandler.getCommentsWithData(post.id)}">
+                        <h5 class="comment-header" th:text="${comment.nickname} + ' commented (' + ${comment.timeSince(currentTime)} + '):'"></h5>
+                        <h6 class="comment-body" th:text="${comment.content}"></h6>
+                    </div>
+                    <div class="comment-box">
+                        <form id="new-comment" class="form-post" th:action="@{/comments}" th:object="${comment}" method="POST">
+                            <h3><i class="fa-regular fa-message"></i></h3>
+                            <input type="hidden" th:attr="name='postId'" th:value="${post.id}">
+                            <input type="hidden" th:attr="name='userId'" th:value="${#authentication.principal.attributes['sub']}">
+                            <input type="hidden" th:attr="name='dateTime'" th:value="${currentTime}">
+                            <input type="text"
+                                   id="comment-input"
+                                   class="input-post"
+                                   th:field="*{comments}"
+                                   th:placeholder="'Write a comment...'"
+                            />
+                        </form>
+
+                    </div>
+                </div>
+
             </div>
             <div class="card-bottom">
                 <div class="icon-group like-group">
@@ -19,8 +42,8 @@
                     <p>Liked</p>
                 </div>
                 <div class="icon-group">
-                    <a href="#"><i class="fa-regular fa-comment"></i></a>
-                    <p>Comment</p>
+                    <a href="#" class="comments-button"><i class="fa-regular fa-comment"></i></a>
+                    <p>Comments</p>
                 </div>
             </div>
         </div>
@@ -38,6 +61,8 @@
                 const likeGroup = card.querySelector('.like-group');
                 const likedGroup = card.querySelector('.liked-group');
                 const likedButton = likedGroup.querySelector('.liked-button');
+                const commentsButton = card.querySelector('.comments-button');
+                const commentsSection = card.querySelector('.comments-section');
 
                 const likedByUser = card.dataset.liked;
                 const postId = card.dataset.postId;
@@ -83,6 +108,39 @@
 
                     likeGroup.classList.toggle('hidden');
                     likedGroup.classList.toggle('hidden');
+                });
+
+                commentsButton.addEventListener('click', function(event) {
+                    event.preventDefault(); // Don't reload the page.
+                    commentsSection.classList.toggle('hidden');
+                });
+
+                document.getElementById('new-comment').addEventListener('submit', function(e) {
+                    e.preventDefault(); // Prevent form submission
+
+                    const formData = new FormData(this);
+
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.json())  // Expecting json response
+                    .then(comment => {
+                        const newComment = document.createElement('div');
+                        newComment.innerHTML = `
+                            <h5 class="comment-header">${comment.nickname} commented (${comment.timestring}):</h5>
+                            <h6 class="comment-body">${comment.content}</h6>
+                        `;
+
+                        commentsSection.prepend(newComment);
+                        document.getElementById('comment-input').value = '';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
                 });
             });
         });

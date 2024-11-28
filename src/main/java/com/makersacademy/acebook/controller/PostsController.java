@@ -3,6 +3,7 @@ package com.makersacademy.acebook.controller;
 import com.makersacademy.acebook.dto.CommentsHandler;
 import com.makersacademy.acebook.dto.LikesHandler;
 import com.makersacademy.acebook.dto.PostWithData;
+import com.makersacademy.acebook.model.Comment;
 import com.makersacademy.acebook.model.Post;
 import com.makersacademy.acebook.repository.CommentRepository;
 import com.makersacademy.acebook.repository.LikeRepository;
@@ -39,6 +40,8 @@ public class PostsController {
         Iterable<PostWithData> posts = repository.findAllWithData(getCurrentUser());
         model.addAttribute("posts", posts);
         model.addAttribute("post", new Post());
+        model.addAttribute("comment", new Comment());
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("currentTime", LocalDateTime.now());
         model.addAttribute("likesHandler", new LikesHandler(userRepository, currentUser));
         model.addAttribute("commentsHandler", new CommentsHandler(commentRepository, currentUser));

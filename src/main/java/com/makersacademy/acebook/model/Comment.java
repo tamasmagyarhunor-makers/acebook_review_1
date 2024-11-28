@@ -21,14 +21,17 @@ public class Comment {
     private String comments;
 
     @Column(name = "date_time")
-    private LocalDateTime timestamp;
+    private LocalDateTime dateTime;
 
-    public Comment(String userId, Long postId, String comments, LocalDateTime timestamp) {
+    public Comment(String userId, Long postId, String comments, LocalDateTime dateTime) {
         this.userId = userId;
         this.postId = postId;
         this.comments = comments;
-        this.timestamp = timestamp;
+        this.dateTime = dateTime;
     }
+
+    public Comment() {}
+
     public Long getId() {
         return id;
     }
@@ -61,11 +64,11 @@ public class Comment {
         this.comments = comments;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 }

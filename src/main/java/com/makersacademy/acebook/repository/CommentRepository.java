@@ -17,6 +17,6 @@ public interface CommentRepository extends CrudRepository<Comment, Long> {
             "FROM Comment c " +
             "JOIN User u ON c.userId = u.auth0Id " +
             "WHERE c.postId = :postId " +
-            "ORDER BY p.dateTime DESC")
+            "ORDER BY c.dateTime ASC")
     public List<CommentWithData> findAllCommentsWithData(@Param("postId") Long postId);
 }
