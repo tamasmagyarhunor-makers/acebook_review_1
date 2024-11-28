@@ -20,7 +20,7 @@ public class Comment {
     @Column(name = "comments")
     private String comments;
 
-    @Column(name = "timestamp")
+    @Column(name = "date_time")
     private LocalDateTime timestamp;
 
     public Comment(String userId, Long postId, String comments, LocalDateTime timestamp) {
