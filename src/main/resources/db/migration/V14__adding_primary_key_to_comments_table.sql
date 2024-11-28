@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS comments;
 
 CREATE TABLE comments (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     user_id varchar(63),
     post_id bigint,
     comments text,
