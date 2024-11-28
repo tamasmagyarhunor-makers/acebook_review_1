@@ -10,12 +10,12 @@ import java.util.List;
 
 public interface FriendRepository extends CrudRepository<Friend, Long> {
     //To remove a friend
-    @Query("DELETE FROM Friend f WHERE (f.userA = :userA AND f.userB = :userB) OR (f.userA = :userB AND f.userB = :userA)")
-    void deleteFriendship(@Param("userA") String userA, @Param("userB") String userB);
+    @Query("DELETE FROM Friend f WHERE (f.user_a = :user_a AND f.user_b = :user_b) OR (f.user_a = :user_b AND f.user_b = :user_a)")
+    void deleteFriendship(@Param("user_a") String user_a, @Param("user_b") String user_b);
 
     //To check for mutual friends
-    @Query("SELECT f FROM Friend f WHERE (f.userA = :userA " +
-            "AND f.userB IN (SELECT f2.userB FROM Friend f2 WHERE f2.userA = :userB)) " +
-            "OR (f.userB = :userA AND f.userA IN (SELECT f2.userA FROM Friend f2 WHERE f2.userB = :userB))")
-    List<FriendRepository> findCommonFriends(@Param("userA") String userA, @Param("userB") String userB );
+    @Query("SELECT f FROM Friend f WHERE (f.user_a = :user_a " +
+            "AND f.user_b IN (SELECT f2.user_b FROM Friend f2 WHERE f2.user_a = :user_b)) " +
+            "OR (f.user_b = :user_a AND f.user_a IN (SELECT f2.user_a FROM Friend f2 WHERE f2.user_b = :user_b))")
+    List<FriendRepository> findCommonFriends(@Param("user_a") String user_a, @Param("user_b") String user_b );
         }
