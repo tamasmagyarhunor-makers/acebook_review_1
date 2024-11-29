@@ -2,6 +2,7 @@ package com.makersacademy.acebook.feature;
 
 import com.github.javafaker.Faker;
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.junit.Assert;
@@ -21,7 +22,7 @@ public class SignUpTest {
     public void setup() {
         faker = new Faker();
         playwright = Playwright.create();
-        Browser browser = playwright.chromium().launch();
+        Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
         page = browser.newPage();
         page.navigate("http://localhost:8080/");
     }
