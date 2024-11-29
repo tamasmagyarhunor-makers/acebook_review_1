@@ -41,11 +41,13 @@ jobs:
          node-version: '16.x'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          mvn install  # This installs all dependencies using Maven
 
       - name: Install Playwright and browsers
         run: |
-            npx playwright install
+          mvn exec:java -Dexec.mainClass="com.microsoft.playwright"  # Replace with a suitable command for Playwright in Java
+
             
 
       - name: Set Auth0 environment variables
