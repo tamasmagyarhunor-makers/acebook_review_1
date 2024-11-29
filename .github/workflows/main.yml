@@ -42,7 +42,7 @@ jobs:
       - name: Test Chrome version
         run: |
           chrome --version
-          mvn -B install -D skipTests --no-transfer-progres
+          mvn -B install -D skipTests -ntp
           mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
       - name: Set Auth0 environment variables
