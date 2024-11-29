@@ -1,27 +1,14 @@
 package com.makersacademy.acebook.feature;
 
 import com.github.javafaker.Faker;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.springframework.boot.autoconfigure.ssl.SslProperties;
-
-import java.io.File;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.System.getenv;
-import static org.mockito.internal.matchers.text.ValuePrinter.print;
-import static org.springframework.data.domain.Range.open;
 
 public class SignUpTest {
 
