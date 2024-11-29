@@ -31,6 +31,7 @@ public class CommentsController {
     @PostMapping("/comments")
     @ResponseBody
     public ResponseEntity<CommentWithData> create(@ModelAttribute Comment comment) {
+        comment.setDateTime(LocalDateTime.now());
         repository.save(comment);
         User user = userRepository.findUserByAuth0Id(comment.getUserId()).orElse(null);
         String nickname = (user != null) ? user.getNickname() : "Anonymous user";

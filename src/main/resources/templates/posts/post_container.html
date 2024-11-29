@@ -19,7 +19,7 @@
                             <h3><i class="fa-regular fa-message"></i></h3>
                             <input type="hidden" th:attr="name='postId'" th:value="${post.id}">
                             <input type="hidden" th:attr="name='userId'" th:value="${#authentication.principal.attributes['sub']}">
-                            <input type="hidden" th:attr="name='dateTime'" th:value="${currentTime}">
+                            <input type="hidden" th:attr="name='dateTime'" th:value="${null}">
                             <input type="text"
                                    class="input-post"
                                    th:field="*{comments}"
