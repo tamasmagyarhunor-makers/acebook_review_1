@@ -38,9 +38,8 @@ jobs:
       - name: Install Chrome
         uses: browser-actions/setup-chrome@v1
         with:
-          chrome-version: '115'  # Set the version of Chrome you need
           install-chromedriver: true
-          chromedriver-version: '115.0.5790.102'  # Match this with your installed Chrome version
+          chromedriver-version: '131'  # Match this with your installed Chrome version
       - name: Test Chrome version
         run: |
           chrome --version 
