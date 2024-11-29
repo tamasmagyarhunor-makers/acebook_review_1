@@ -39,7 +39,7 @@ jobs:
         uses: browser-actions/setup-chrome@v1
         with:
           install-chromedriver: true
-          chromedriver-version: '131'  # Match this with your installed Chrome version
+          chrome-version: '133'  # Match this with your installed Chrome version
       - name: Test Chrome version
         run: |
           chrome --version 
