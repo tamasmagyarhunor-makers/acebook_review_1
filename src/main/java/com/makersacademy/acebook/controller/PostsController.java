@@ -57,6 +57,18 @@ public class PostsController {
         return new RedirectView("/posts");
     }
 
+    @PatchMapping("/posts/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody String newContent) {
+        Post post = repository.findById(id).orElse(null);
+        if (post != null) {
+            post.setContent(newContent);
+            repository.save(post);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/posts/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         Post post = repository.findById(id).orElse(null);

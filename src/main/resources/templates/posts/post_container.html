@@ -7,14 +7,25 @@
                         <h3><span th:text="${post.userId == currentUser ? 'You' : post.nickname}"></span> posted</h3>
                         <h5 th:text="${post.timeSince(currentTime)}"></h5>
                     </div>
-                    <span class="delete-card" th:if="${post.userId == currentUser}"><i class="fa-solid fa-xmark"></i></span>
+                    <div class="post-mgmt-icons" th:if="${post.userId == currentUser}">
+                        <span class="edit-card"><i class="fa-regular fa-pen-to-square"></i></span>
+                        <span class="delete-card"><i class="fa-solid fa-xmark"></i></span>
+                    </div>
                 </div>
                 <p class="post-content" th:text="${post.content}"></p>
+                <div th:id="'edit-post-' + ${post.id}" class="post-edit hidden">
+                    <form class="post-edit-form">
+                        <input type="text" class="post-edit-input" />
+                    </form>
+                    <div class="post-mgmt-icons cancel-edit">
+                        <i class="fa-solid fa-ban"></i>
+                    </div>
+                </div>
                 <h5 th:id="'likes-string-' + ${post.id}" class="who-liked-this" th:text="${likesHandler.getLikedString(post.id, post.liked)}"></h5>
 
                 <div class="comments-section hidden">
                     <div th:each="comment: ${commentsHandler.getCommentsWithData(post.id)}">
-                        <h5 class="comment-header" th:text="${comment.nickname} + ' commented (' + ${comment.timeSince(currentTime)} + '):'"></h5>
+                        <h5 class="comment-header" th:text="${comment.userId == currentUser ? 'You' : comment.nickname} + ' commented (' + ${comment.timeSince(currentTime)} + '):'"></h5>
                         <h6 class="comment-body" th:text="${comment.content}"></h6>
                     </div>
                     <div class="comment-box">
@@ -45,7 +56,7 @@
                 <div class="icon-group comments-button" th:with="commentsCount=${commentsHandler.count(post.id)}">
                     <span><i class="fa-regular fa-comment"></i></span>
                     <p>Comments</p>
-                    <span class="no-margin" th:if="${commentsCount > 0}">
+                    <span class="counter-element no-margin" th:classappend="${commentsCount > 0} ? '' : 'hidden'">
                         (<span class="comments-counter" th:text="${commentsCount}"></span>)
                     </span>
                 </div>
@@ -63,13 +74,20 @@
             cards.forEach(card => {
                 const likeGroup = card.querySelector('.like-group');
                 const likedGroup = card.querySelector('.liked-group');
+                const editButton = card.querySelector('.edit-card');
+                const cancelEdit = card.querySelector('.cancel-edit');
                 const deleteButton = card.querySelector('.delete-card');
+                const postContent = card.querySelector('.post-content');
+                const postEdit = card.querySelector('.post-edit');
+                const postEditForm = card.querySelector('.post-edit-form');
+                const postEditInput = postEdit.querySelector('.post-edit-input');
                 const commentsButton = card.querySelector('.comments-button');
                 const commentsSection = card.querySelector('.comments-section');
-                const commentBox = card.querySelector('.comment-box');
-                const commentForm = card.querySelector('.form-post');
-                const commentInput = card.querySelector('.input-post');
+                const commentBox = commentsSection.querySelector('.comment-box');
+                const commentForm = commentsSection.querySelector('.form-post');
+                const commentInput = commentsSection.querySelector('.input-post');
                 const likeString = card.querySelector('.who-liked-this');
+                const counterElement = card.querySelector('.counter-element');
                 const commentsCounter = card.querySelector('.comments-counter');
 
                 const likedByUser = card.dataset.liked;
@@ -81,6 +99,25 @@
                     likedGroup.classList.add('hidden');
                 }
 
+                if (editButton) {
+                    const editTargets = [postContent, editButton]
+                    editTargets.forEach(target => {
+                        target.addEventListener('click', function(event) {
+                            postEditInput.value = postContent.innerText;
+                            postContent.classList.add('hidden');
+                            postEdit.classList.remove('hidden');
+                            editButton.classList.add('hidden');
+                            postEditInput.select();
+                            postEditInput.setSelectionRange(postEditInput.value.length, postEditInput.value.length);
+                        });
+                    });
+                    cancelEdit.addEventListener('click', function(event) {
+                        postEdit.classList.add('hidden');
+                        postContent.classList.remove('hidden');
+                        editButton.classList.remove('hidden');
+                    });
+                }
+
                 if (deleteButton) {
                     deleteButton.addEventListener('click', function(event) {
                         const isConfirmed = confirm("Are you sure you want to delete this post?");
@@ -90,7 +127,7 @@
                             })
                             .then(response => {
                                 if (response.ok) {
-                                    card.remove();;
+                                    card.remove();
                                 }
                             })
                             .catch(error => {
@@ -99,6 +136,25 @@
                         }
                     });
                 }
+
+                postEditForm.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Prevent form submission
+
+                    const newPostContent = postEditInput.value;
+                    fetch(`${protocol}//${root}/posts/${postId}`, {
+                        method: 'PATCH',
+                        body: newPostContent
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            postContent.innerText = newPostContent;
+                            cancelEdit.click();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating post:', error.message);
+                    });
+                });
 
                 likeGroup.addEventListener('click', function(event) {
                     event.preventDefault(); // Don't reload the page.
@@ -171,7 +227,7 @@
                     .then(comment => {
                         const newComment = document.createElement('div');
                         newComment.innerHTML = `
-                            <h5 class="comment-header">${comment.nickname} commented (${comment.timeAgo}):</h5>
+                            <h5 class="comment-header">You commented (${comment.timeAgo}):</h5>
                             <h6 class="comment-body">${comment.content}</h6>
                         `;
                         commentsSection.insertBefore(newComment, commentBox);
@@ -181,6 +237,7 @@
                     });
 
                     commentsCounter.innerText = parseInt(commentsCounter.innerText) + 1;
+                    counterElement.classList.remove('hidden');
 
                     const commentMargins = 20;
                     const newCommentDiv = document.querySelector('.comments-section > :nth-last-child(2)');
