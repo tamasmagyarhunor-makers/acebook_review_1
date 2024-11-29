@@ -35,20 +35,14 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
         with:
-         node-version: '16.x'
-
-      - name: Install dependencies
+          install-chromedriver: true
+      - name: Test Chrome version
         run: |
-          mvn install  # This installs all dependencies using Maven
-
-      - name: Install Playwright and browsers
-        run: |
-          mvn exec:java -Dexec.mainClass="com.microsoft.playwright"  # Replace with a suitable command for Playwright in Java
-
-            
+          chrome --version
+          install playwright
 
       - name: Set Auth0 environment variables
         run: |
