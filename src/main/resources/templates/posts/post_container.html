@@ -79,6 +79,7 @@
                 const deleteButton = card.querySelector('.delete-card');
                 const postContent = card.querySelector('.post-content');
                 const postEdit = card.querySelector('.post-edit');
+                const postEditForm = card.querySelector('.post-edit-form');
                 const postEditInput = postEdit.querySelector('.post-edit-input');
                 const commentsButton = card.querySelector('.comments-button');
                 const commentsSection = card.querySelector('.comments-section');
@@ -99,13 +100,16 @@
                 }
 
                 if (editButton) {
-                    editButton.addEventListener('click', function(event) {
-                        postEditInput.value = postContent.innerText;
-                        postContent.classList.add('hidden');
-                        postEdit.classList.remove('hidden');
-                        editButton.classList.add('hidden');
-                        postEditInput.select();
-                        postEditInput.setSelectionRange(postEditInput.value.length, postEditInput.value.length);
+                    const editTargets = [postContent, editButton]
+                    editTargets.forEach(target => {
+                        target.addEventListener('click', function(event) {
+                            postEditInput.value = postContent.innerText;
+                            postContent.classList.add('hidden');
+                            postEdit.classList.remove('hidden');
+                            editButton.classList.add('hidden');
+                            postEditInput.select();
+                            postEditInput.setSelectionRange(postEditInput.value.length, postEditInput.value.length);
+                        });
                     });
                     cancelEdit.addEventListener('click', function(event) {
                         postEdit.classList.add('hidden');
@@ -123,7 +127,7 @@
                             })
                             .then(response => {
                                 if (response.ok) {
-                                    card.remove();;
+                                    card.remove();
                                 }
                             })
                             .catch(error => {
@@ -132,6 +136,25 @@
                         }
                     });
                 }
+
+                postEditForm.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Prevent form submission
+
+                    const newPostContent = postEditInput.value;
+                    fetch(`${protocol}//${root}/posts/${postId}`, {
+                        method: 'PATCH',
+                        body: newPostContent
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            postContent.innerText = newPostContent;
+                            cancelEdit.click();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating post:', error.message);
+                    });
+                });
 
                 likeGroup.addEventListener('click', function(event) {
                     event.preventDefault(); // Don't reload the page.
