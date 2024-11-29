@@ -39,9 +39,12 @@
                     <a href="#" class="liked-button"><i class="fa-solid fa-thumbs-up"></i></a>
                     <p>Liked</p>
                 </div>
-                <div class="icon-group">
+                <div class="icon-group" th:with="commentsCount=${commentsHandler.count(post.id)}">
                     <span class="comments-button"><i class="fa-regular fa-comment"></i></span>
                     <p>Comments</p>
+                    <span class="no-margin" th:if="${commentsCount > 0}">
+                        (<span th:text="${commentsCount}"></span>)
+                    </span>
                 </div>
             </div>
         </div>

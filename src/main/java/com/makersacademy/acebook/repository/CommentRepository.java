@@ -12,6 +12,7 @@ public interface CommentRepository extends CrudRepository<Comment, Long> {
     List<Comment> findByUserId(String userId);
     List<Comment> findByPostId(Long postId);
     List<Comment> findByUserIdAndPostId(String userId, Long postId);
+    int countByPostId(Long postId);
     @Query("SELECT new com.makersacademy.acebook.dto.CommentWithData(" +
             "c.id, c.userId, c.postId, c.comments, c.dateTime, u.nickname) " +
             "FROM Comment c " +

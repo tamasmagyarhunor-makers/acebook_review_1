@@ -22,4 +22,6 @@ public class CommentsHandler {
     public List<CommentWithData> getCommentsWithData(Long postId) {
         return commentRepository.findAllCommentsWithData(postId);
     }
+
+    public int count(Long postId) { return commentRepository.countByPostId(postId); }
 }
