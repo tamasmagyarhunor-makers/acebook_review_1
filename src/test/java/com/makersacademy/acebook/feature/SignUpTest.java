@@ -38,7 +38,7 @@ public class SignUpTest {
         else {
             System.setProperty("webdriver.chrome.driver", "/opt/homebrew/bin/chromedriver");
         }
-        options.setBrowserVersion("118");
+        options.setBrowserVersion("118v");
         driver = new ChromeDriver(options);
         faker = new Faker();
     }
@@ -52,9 +52,8 @@ public class SignUpTest {
     public void successfulSignUpAlsoLogsInUser() throws InterruptedException {
         String email = faker.name().username() + "@email.com";
 
-        driver.get("http://127.0.0.1:8080/");
-        TimeUnit.SECONDS.sleep(1);
-
+        driver.get("https://127.0.0.1:8080/");
+        TimeUnit.SECONDS.sleep(30);
 
 
         driver.findElement(By.linkText("Sign up"));//.click();
@@ -63,6 +62,7 @@ public class SignUpTest {
         driver.findElement(By.name("action")).click();
         driver.findElement(By.name("action")).click();
         String greetingText = driver.findElement(By.id("greeting")).getText();
+
         Assert.assertEquals("Signed in as " + email, greetingText);
     }
 }

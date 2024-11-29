@@ -40,9 +40,10 @@ jobs:
         with:
           install-chromedriver: true
           chrome-version: '118'  # Match this with your installed Chrome version
-          "chromedriver": "^118.0.0"
+
       - name: Test Chrome version
         run: |
+          which browser
           chrome --version 
           which chromedriver
 
