@@ -30,14 +30,15 @@ public class SignUpTest {
 
     @BeforeEach
     public void setup() {
+        ChromeOptions options = new ChromeOptions();
         if (Objects.equals(getenv("GITHUB_ACTIONS"), "true")){
             System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+            options.addArguments("headless");
         }
         else {
             System.setProperty("webdriver.chrome.driver", "/opt/homebrew/bin/chromedriver");
         }
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless");
+        options.setBrowserVersion("118");
         driver = new ChromeDriver(options);
         faker = new Faker();
     }
