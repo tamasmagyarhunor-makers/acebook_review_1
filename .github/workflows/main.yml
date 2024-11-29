@@ -40,7 +40,9 @@ jobs:
         with:
           install-chromedriver: true
       - name: Test Chrome version
-        run: chrome --version
+        run: chrome --version 
+             which chromedriver
+
 
       - name: Set Auth0 environment variables
         run: |
