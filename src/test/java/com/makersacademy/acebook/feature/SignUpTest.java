@@ -36,7 +36,7 @@ public class SignUpTest {
     public void successfulSignUpAlsoLogsInUser() {
         String email = faker.name().username() + "@email.com";
 
-        driver.get("https://localhost:8080/");
+        driver.get("http://127.0.0.1:8080/");
         driver.findElement(By.linkText("Sign up")).click();
         driver.findElement(By.name("email")).sendKeys(email);
         driver.findElement(By.name("password")).sendKeys("P@55qw0rd");
