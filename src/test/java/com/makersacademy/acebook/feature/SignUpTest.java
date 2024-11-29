@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class SignUpTest {
 
@@ -18,8 +19,10 @@ public class SignUpTest {
 
     @BeforeEach
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "/opt/hostedtoolcache/setup-chrome/chromedriver");
-        driver = new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", "/opt/hostedtoolcache/setup-chrome/chromedriver/1389665/x64/chromedriver");
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("headless");
+        driver = new ChromeDriver(options);
         faker = new Faker();
     }
 
