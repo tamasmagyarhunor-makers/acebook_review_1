@@ -40,6 +40,13 @@ jobs:
         with:
           install-chromedriver: true
           chrome-version: '118'  # Match this with your installed Chrome version
+      - name: changes chrome version
+        run:
+          sudo apt remove google-chrome-stable
+          sudo dpkg -i google-chrome-stable_118.x.x.x.deb
+          google-chrome --version
+
+
 
       - name: Test Chrome version
         run: |
