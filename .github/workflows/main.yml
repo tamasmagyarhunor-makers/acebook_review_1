@@ -44,6 +44,18 @@ jobs:
           chrome --version 
           which chromedriver
 
+      - name: Move chromedriver to /usr/local/bin
+        run: |
+          # Capture the path of chromedriver
+          chromedriver_path=$(which chromedriver)
+
+          # Move chromedriver to /usr/local/bin
+          sudo mv "$chromedriver_path" "/usr/local/bin/chromedriver"
+
+          # Verify the move
+          echo "chromedriver moved to /usr/local/bin"
+
+
 
       - name: Set Auth0 environment variables
         run: |

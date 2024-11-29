@@ -19,7 +19,8 @@ public class SignUpTest {
 
     @BeforeEach
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "/opt/hostedtoolcache/setup-chrome/chromedriver/1389665/x64/chromedriver");
+
+        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("headless");
         driver = new ChromeDriver(options);
