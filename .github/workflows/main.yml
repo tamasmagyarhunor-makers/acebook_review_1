@@ -35,15 +35,20 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Install Chrome
+      - name: Install Chrome 118
         uses: browser-actions/setup-chrome@v1
         with:
           install-chromedriver: true
           chrome-version: '118'  # Match this with your installed Chrome version
-      - name: changes chrome version
-        run:
-          sudo apt remove google-chrome-stable
-          sudo dpkg -i google-chrome-stable_118.x.x.x.deb
+
+      # 2. Install Google Chrome 118
+      - name: Install Google Chrome 118
+        run: |
+          # Download and install Google Chrome 118
+          curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome.deb
+          sudo dpkg -i google-chrome.deb || sudo apt-get install -f
+          
+          # Verify Chrome version
           google-chrome --version
 
 
