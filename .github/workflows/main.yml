@@ -72,8 +72,9 @@ jobs:
           PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres acebook_springboot_development
           PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres acebook_springboot_test
 
-      - name: Test with maven
-        # mvn spring-boot:run &
-        run: |
-          mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
-          mvn test
+      - name: Build & Install
+        run: mvn -B install -D skipTests --no-transfer-progress
+      - name: Ensure browsers are installed
+        run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
+      - name: Run tests
+        run: mvn test
