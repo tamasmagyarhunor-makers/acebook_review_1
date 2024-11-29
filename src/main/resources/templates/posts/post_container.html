@@ -2,9 +2,12 @@
     <div th:each="post: ${posts}">
         <div class="card card-post" th:id="'post-' + ${post.id}" th:data-post-id="${post.id}" th:data-liked="${post.liked}">
             <div class="card-top">
-                <div class="poster-info">
-                    <h3><span th:text="${post.nickname}"></span> posted</h3>
-                    <h5 th:text="${post.timeSince(currentTime)}"></h5>
+                <div class="card-header">
+                    <div class="poster-info">
+                        <h3><span th:text="${post.userId == currentUser ? 'You' : post.nickname}"></span> posted</h3>
+                        <h5 th:text="${post.timeSince(currentTime)}"></h5>
+                    </div>
+                    <span class="delete-card" th:if="${post.userId == currentUser}"><i class="fa-solid fa-xmark"></i></span>
                 </div>
                 <p class="post-content" th:text="${post.content}"></p>
                 <h5 th:id="'likes-string-' + ${post.id}" class="who-liked-this" th:text="${likesHandler.getLikedString(post.id, post.liked)}"></h5>
@@ -32,15 +35,15 @@
             </div>
             <div class="card-bottom">
                 <div class="icon-group like-group">
-                    <a href="#" class="like-button"><i class="fa-regular fa-thumbs-up"></i></a>
+                    <a href="#"><i class="fa-regular fa-thumbs-up"></i></a>
                     <p>Like</p>
                 </div>
                 <div class="icon-group liked-group">
-                    <a href="#" class="liked-button"><i class="fa-solid fa-thumbs-up"></i></a>
+                    <a href="#"><i class="fa-solid fa-thumbs-up"></i></a>
                     <p>Liked</p>
                 </div>
-                <div class="icon-group" th:with="commentsCount=${commentsHandler.count(post.id)}">
-                    <span class="comments-button"><i class="fa-regular fa-comment"></i></span>
+                <div class="icon-group comments-button" th:with="commentsCount=${commentsHandler.count(post.id)}">
+                    <span><i class="fa-regular fa-comment"></i></span>
                     <p>Comments</p>
                     <span class="no-margin" th:if="${commentsCount > 0}">
                         (<span class="comments-counter" th:text="${commentsCount}"></span>)
@@ -60,8 +63,7 @@
             cards.forEach(card => {
                 const likeGroup = card.querySelector('.like-group');
                 const likedGroup = card.querySelector('.liked-group');
-                const likeButton = likeGroup.querySelector('.like-button');
-                const likedButton = likedGroup.querySelector('.liked-button');
+                const deleteButton = card.querySelector('.delete-card');
                 const commentsButton = card.querySelector('.comments-button');
                 const commentsSection = card.querySelector('.comments-section');
                 const commentBox = card.querySelector('.comment-box');
@@ -79,7 +81,26 @@
                     likedGroup.classList.add('hidden');
                 }
 
-                likeButton.addEventListener('click', function(event) {
+                if (deleteButton) {
+                    deleteButton.addEventListener('click', function(event) {
+                        const isConfirmed = confirm("Are you sure you want to delete this post?");
+                        if (isConfirmed) {
+                            fetch(`${protocol}//${root}/posts/${postId}`, {
+                                method: 'DELETE'
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    card.remove();;
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error deleting post:', error.message);
+                            });
+                        }
+                    });
+                }
+
+                likeGroup.addEventListener('click', function(event) {
                     event.preventDefault(); // Don't reload the page.
 
                     fetch(`${protocol}//${root}/likes/${postId}`, {
@@ -97,7 +118,7 @@
                     likedGroup.classList.toggle('hidden');
                 });
 
-                likedButton.addEventListener('click', function(event) {
+                likedGroup.addEventListener('click', function(event) {
                     event.preventDefault(); // Don't reload the page.
 
                     fetch(`${protocol}//${root}/likes/${postId}`, {
