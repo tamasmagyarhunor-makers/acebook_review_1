@@ -8,9 +8,20 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.boot.autoconfigure.ssl.SslProperties;
+
+import java.io.File;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.System.getenv;
+import static org.mockito.internal.matchers.text.ValuePrinter.print;
+import static org.springframework.data.domain.Range.open;
 
 public class SignUpTest {
 
@@ -19,8 +30,12 @@ public class SignUpTest {
 
     @BeforeEach
     public void setup() {
-
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        if (Objects.equals(getenv("GITHUB_ACTIONS"), "true")){
+            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        }
+        else {
+            System.setProperty("webdriver.chrome.driver", "/opt/homebrew/bin/chromedriver");
+        }
         ChromeOptions options = new ChromeOptions();
         options.addArguments("headless");
         driver = new ChromeDriver(options);
@@ -33,11 +48,15 @@ public class SignUpTest {
     }
 
     @Test
-    public void successfulSignUpAlsoLogsInUser() {
+    public void successfulSignUpAlsoLogsInUser() throws InterruptedException {
         String email = faker.name().username() + "@email.com";
 
         driver.get("http://127.0.0.1:8080/");
-        driver.findElement(By.linkText("Sign up")).click();
+        TimeUnit.SECONDS.sleep(1);
+
+
+
+        driver.findElement(By.linkText("Sign up"));//.click();
         driver.findElement(By.name("email")).sendKeys(email);
         driver.findElement(By.name("password")).sendKeys("P@55qw0rd");
         driver.findElement(By.name("action")).click();
