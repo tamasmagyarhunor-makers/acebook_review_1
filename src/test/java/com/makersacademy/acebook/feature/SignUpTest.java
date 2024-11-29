@@ -34,30 +34,22 @@ public class SignUpTest {
         page.setDefaultTimeout(5000);
         page.getByText("Sign up").click();
         String email = faker.name().username() + "@email.com";
-
-        page.screenshot(new Page.ScreenshotOptions()
-                .setPath(Paths.get("screenshot0.png"))
-                .setFullPage(true));
+//
+//        page.screenshot(new Page.ScreenshotOptions()
+//                .setPath(Paths.get("screenshot0.png"))
+//                .setFullPage(true));
 
         page.locator("#email").fill(email);
         page.locator("#password").fill("P@s5W0rd");
-
-        page.screenshot(new Page.ScreenshotOptions()
-                .setPath(Paths.get("screenshot1.png"))
-                .setFullPage(true));
+//
+//        page.screenshot(new Page.ScreenshotOptions()
+//                .setPath(Paths.get("screenshot1.png"))
+//                .setFullPage(true));
 
         page.getByText("Continue").nth(1).click();
         page.getByText("accept").click();
 
-        page.screenshot(new Page.ScreenshotOptions()
-                .setPath(Paths.get("screenshot2.png"))
-                .setFullPage(true));
-//
-//        page.getByText("Submit").click();
-//
-//        page.screenshot(new Page.ScreenshotOptions()
-//                .setPath(Paths.get("screenshot3.png"))
-//                .setFullPage(true));
+
         Assert.assertEquals("http://localhost:8080/posts",page.url());
     }
 }
