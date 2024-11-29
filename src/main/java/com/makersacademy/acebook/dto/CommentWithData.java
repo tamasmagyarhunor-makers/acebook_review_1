@@ -3,42 +3,41 @@ package com.makersacademy.acebook.dto;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class PostWithData {
+public class CommentWithData {
     private Long id;
-    private String content;
     private String userId;
-    private Boolean friendsOnly;
+    private Long postId;
+    private String content;
     private LocalDateTime dateTime;
     private String nickname;
-    private boolean liked;
+    private String timeAgo;
 
-    public PostWithData(Long id, String content, String userId, Boolean friendsOnly, LocalDateTime dateTime, String nickname, boolean liked) {
+    public CommentWithData(Long id, String userId, Long postId, String content, LocalDateTime dateTime, String nickname) {
         this.id = id;
         this.userId = userId;
+        this.postId = postId;
         this.content = content;
-        this.friendsOnly = friendsOnly;
         this.dateTime = dateTime;
         this.nickname = nickname;
-        this.liked = liked;
     }
 
-    public PostWithData() {};
+    public CommentWithData() {}
 
     public Long getId() { return id; }
-    public String getContent() { return content; }
     public String getUserId() { return userId; }
-    public Boolean getFriendsOnly() { return friendsOnly; }
+    public Long getPostId() { return postId; }
+    public String getContent() { return content; }
     public LocalDateTime getDateTime() { return dateTime; }
     public String getNickname() { return nickname; }
-    public boolean getLiked() { return liked; }
+    public String getTimeAgo() { return timeAgo; }
 
     public void setId(Long id) { this.id = id; }
-    public void setContent(String content) { this.content = content; }
     public void setUserId(String userId) { this.userId = userId; }
-    public void setFriendsOnly(boolean friendsOnly) { this.friendsOnly = friendsOnly; }
+    public void setPostId(Long postId) { this.postId = postId; }
+    public void setContent(String content) { this.content = content; }
     public void setDateTime(LocalDateTime dateTime) { this.dateTime = dateTime; }
     public void setNickname(String nickname) { this.nickname = nickname; }
-    public void setLiked(boolean liked) { this.liked = liked; }
+    public void setTimeAgo(String timeAgo) { this.timeAgo = timeAgo; }
 
     public String timeSince(LocalDateTime currentTime) {
         Duration duration = Duration.between(dateTime, currentTime);

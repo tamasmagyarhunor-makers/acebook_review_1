@@ -23,6 +23,11 @@ h5 {
     font-weight: normal;
 }
 
+h6 {
+    font-size: 14px;
+    font-weight: normal;
+}
+
 a {
     text-decoration: none;
 }
@@ -82,6 +87,10 @@ a {
 .icon-group > * {
     color: black;
     margin: 0 4px;
+}
+
+.no-margin {
+    margin: 0 !important;
 }
 
 /* NAVBAR */
@@ -357,3 +366,16 @@ a {
     margin-top: 0 !important;
 }
 
+/* COMMENTS */
+.comment-header {
+    margin-top: 16px;
+    margin-bottom: 4px;
+}
+
+.comment-body {
+    margin-left: 16px;
+}
+
+.comments-button {
+    cursor: pointer;
+}
