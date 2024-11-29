@@ -82,6 +82,7 @@ a {
 .icon-group {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .icon-group > * {
@@ -329,6 +330,12 @@ a {
     align-items: center;
 }
 
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
 .form-post {
     width: 100%;
     padding: 12px 16px;
@@ -366,6 +373,12 @@ a {
     margin-top: 0 !important;
 }
 
+.delete-card {
+    cursor: pointer;
+    font-size: 20px;
+    color: #A5A5A5;
+}
+
 /* COMMENTS */
 .comment-header {
     margin-top: 16px;
@@ -374,8 +387,4 @@ a {
 
 .comment-body {
     margin-left: 16px;
-}
-
-.comments-button {
-    cursor: pointer;
 }

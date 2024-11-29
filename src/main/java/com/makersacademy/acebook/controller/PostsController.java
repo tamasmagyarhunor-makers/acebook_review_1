@@ -10,6 +10,7 @@ import com.makersacademy.acebook.repository.LikeRepository;
 import com.makersacademy.acebook.repository.PostRepository;
 import com.makersacademy.acebook.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +52,19 @@ public class PostsController {
 
     @PostMapping("/posts")
     public RedirectView create(@ModelAttribute Post post) {
+        post.setDateTime(LocalDateTime.now());
         repository.save(post);
         return new RedirectView("/posts");
+    }
+
+    @DeleteMapping("/posts/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Post post = repository.findById(id).orElse(null);
+        if (post != null) {
+            repository.delete(post);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
