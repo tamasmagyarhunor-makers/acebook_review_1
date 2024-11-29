@@ -1,22 +1,28 @@
 package com.makersacademy.acebook.feature;
 
 import com.github.javafaker.Faker;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
-import static java.lang.System.getenv;
+import java.nio.file.Paths;
 
 public class SignUpTest {
 
+    Page page;
     Faker faker;
 
     @BeforeEach
     public void setup() {
         faker = new Faker();
+        Playwright playwright = Playwright.create();
+        Browser browser = playwright.webkit().launch();
+        page = browser.newPage();
+        page.navigate("http://localhost:8080/");
     }
 
     @AfterEach
@@ -24,8 +30,34 @@ public class SignUpTest {
     }
 
     @Test
-    public void successfulSignUpAlsoLogsInUser() throws InterruptedException {
+    public void successfulSignUpAlsoLogsInUser(){
+        page.setDefaultTimeout(5000);
+        page.getByText("Sign up").click();
         String email = faker.name().username() + "@email.com";
 
+        page.screenshot(new Page.ScreenshotOptions()
+                .setPath(Paths.get("screenshot0.png"))
+                .setFullPage(true));
+
+        page.locator("#email").fill(email);
+        page.locator("#password").fill("P@s5W0rd");
+
+        page.screenshot(new Page.ScreenshotOptions()
+                .setPath(Paths.get("screenshot1.png"))
+                .setFullPage(true));
+
+        page.getByText("Continue").nth(1).click();
+        page.getByText("accept").click();
+
+        page.screenshot(new Page.ScreenshotOptions()
+                .setPath(Paths.get("screenshot2.png"))
+                .setFullPage(true));
+//
+//        page.getByText("Submit").click();
+//
+//        page.screenshot(new Page.ScreenshotOptions()
+//                .setPath(Paths.get("screenshot3.png"))
+//                .setFullPage(true));
+        Assert.assertEquals("http://localhost:8080/posts",page.url());
     }
 }
