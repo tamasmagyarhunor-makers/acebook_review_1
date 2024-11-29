@@ -43,7 +43,7 @@
                     <span class="comments-button"><i class="fa-regular fa-comment"></i></span>
                     <p>Comments</p>
                     <span class="no-margin" th:if="${commentsCount > 0}">
-                        (<span th:text="${commentsCount}"></span>)
+                        (<span class="comments-counter" th:text="${commentsCount}"></span>)
                     </span>
                 </div>
             </div>
@@ -68,6 +68,7 @@
                 const commentForm = card.querySelector('.form-post');
                 const commentInput = card.querySelector('.input-post');
                 const likeString = card.querySelector('.who-liked-this');
+                const commentsCounter = card.querySelector('.comments-counter');
 
                 const likedByUser = card.dataset.liked;
                 const postId = card.dataset.postId;
@@ -139,6 +140,8 @@
 
                     const formData = new FormData(this);
 
+                    commentInput.value = '';
+
                     fetch(this.action, {
                         method: 'POST',
                         body: formData
@@ -151,10 +154,20 @@
                             <h6 class="comment-body">${comment.content}</h6>
                         `;
                         commentsSection.insertBefore(newComment, commentBox);
-                        commentInput.value = '';
                     })
                     .catch(error => {
                         console.error('Error:', error);
+                    });
+
+                    commentsCounter.innerText = parseInt(commentsCounter.innerText) + 1;
+
+                    const commentMargins = 20;
+                    const newCommentDiv = document.querySelector('.comments-section > :nth-last-child(2)');
+                    const height = newCommentDiv.offsetHeight + commentMargins;
+
+                    window.scrollBy({
+                        top: height,
+                        behavior: 'smooth'
                     });
                 });
             });
