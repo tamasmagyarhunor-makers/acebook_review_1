@@ -18,7 +18,7 @@ public class SignUpTest {
 
     @BeforeEach
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/opt/hostedtoolcache/setup-chrome/chromedriver/1389665/x64/chromedriver");
         driver = new ChromeDriver();
         faker = new Faker();
     }
