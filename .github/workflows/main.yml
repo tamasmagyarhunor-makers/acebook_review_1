@@ -78,4 +78,4 @@ jobs:
 
       - name: Test with maven
         run: |
-          mvn spring-boot:run & sleep 10 ; mvn test
+          mvn spring-boot:run & sleep 15 ; mvn test
