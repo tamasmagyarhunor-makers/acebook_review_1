@@ -34,20 +34,11 @@ public class LikeTest {
         page.setDefaultTimeout(6000);
         page.getByText("Sign up").click();
         String email = faker.name().username() + "@email.com";
-
-//        page.screenshot(new Page.ScreenshotOptions()
-//                .setPath(Paths.get("screenshot0.png"))
-//                .setFullPage(true));
-
         page.locator("#email").fill(email);
         page.locator("#password").fill("P@s5W0rd");
-
-//        page.screenshot(new Page.ScreenshotOptions()
-//                .setPath(Paths.get("screenshot1.png"))
-//                .setFullPage(true));
-
         page.getByText("Continue").nth(1).click();
         page.getByText("Accept").click();
+        //used like-group and liked-group
 
     }
 }
