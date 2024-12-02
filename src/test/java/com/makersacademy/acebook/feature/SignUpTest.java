@@ -1,42 +1,55 @@
 package com.makersacademy.acebook.feature;
 
 import com.github.javafaker.Faker;
-import org.junit.After;
+import com.microsoft.playwright.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SignUpTest {
 
-    WebDriver driver;
+    Page page;
     Faker faker;
+    Playwright playwright;
+    BrowserContext context;
 
-    @Before
+    @BeforeEach
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-        driver = new ChromeDriver();
         faker = new Faker();
+        playwright = Playwright.create();
+        Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
+        context = browser.newContext();
+        page = context.newPage();
+        page.navigate("http://localhost:8080/");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        driver.close();
+            playwright.close();
     }
 
     @Test
-    public void successfulSignUpAlsoLogsInUser() {
+    public void successfulSignUpAlsoLogsInUser(){
+        page.setDefaultTimeout(6000);
+        page.getByText("Sign up").click();
         String email = faker.name().username() + "@email.com";
 
-        driver.get("http://localhost:8080/");
-        driver.findElement(By.linkText("Sign up")).click();
-        driver.findElement(By.name("email")).sendKeys(email);
-        driver.findElement(By.name("password")).sendKeys("P@55qw0rd");
-        driver.findElement(By.name("action")).click();
-        driver.findElement(By.name("action")).click();
-        String greetingText = driver.findElement(By.id("greeting")).getText();
-        Assert.assertEquals("Signed in as " + email, greetingText);
+//        page.screenshot(new Page.ScreenshotOptions()
+//                .setPath(Paths.get("screenshot0.png"))
+//                .setFullPage(true));
+
+        page.locator("#email").fill(email);
+        page.locator("#password").fill("P@s5W0rd");
+
+//        page.screenshot(new Page.ScreenshotOptions()
+//                .setPath(Paths.get("screenshot1.png"))
+//                .setFullPage(true));
+
+        page.getByText("Continue").nth(1).click();
+        page.getByText("Accept").click();
+
+
+        Assert.assertEquals("http://localhost:8080/posts",page.url());
     }
 }
