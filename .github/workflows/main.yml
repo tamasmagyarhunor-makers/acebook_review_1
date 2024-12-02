@@ -78,5 +78,6 @@ jobs:
 
       - name: Test with maven
         run: |
-          printenv GITHUB_ACTIONS
+          export POSTGRES_URL="postgresql://localhost:5432/acebook_springboot_development"
+          printenv POSTGRES_URL
           mvn spring-boot:run & sleep 15 ; mvn test
