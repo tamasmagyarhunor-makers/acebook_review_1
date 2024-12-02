@@ -23,6 +23,11 @@ h5 {
     font-weight: normal;
 }
 
+h6 {
+    font-size: 14px;
+    font-weight: normal;
+}
+
 a {
     text-decoration: none;
 }
@@ -77,11 +82,16 @@ a {
 .icon-group {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .icon-group > * {
     color: black;
     margin: 0 4px;
+}
+
+.no-margin {
+    margin: 0 !important;
 }
 
 /* NAVBAR */
@@ -110,7 +120,7 @@ a {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 /* Menu Button Styling */
@@ -308,6 +318,27 @@ a {
     padding: 4px 0;
 }
 
+.post-edit {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.post-edit-form {
+    flex-grow: 1;
+    margin-right: 12px;
+}
+
+.post-edit-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 4px;
+    font-size: 16px;
+    border: 1px dotted #D9D9D9;
+    outline: none;
+}
+
 .card-top {
     padding: 12px 16px;
 }
@@ -318,6 +349,12 @@ a {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .form-post {
@@ -349,4 +386,36 @@ a {
     font-size: 20px;
 }
 
+.who-liked-this {
+    margin-top: 16px;
+}
 
+.who-liked-this:empty {
+    margin-top: 0 !important;
+}
+
+.post-mgmt-icons > * {
+    cursor: pointer;
+    font-size: 20px;
+    color: #A5A5A5;
+    margin-left: 4px;
+}
+
+.edit-card > i {
+    font-size: 16px;
+    transform: translateY(-2px);
+}
+
+/* COMMENTS */
+.comment-header {
+    margin-top: 16px;
+    margin-bottom: 4px;
+}
+
+.comment-body {
+    margin-left: 16px;
+}
+
+.comment-box {
+    margin-top: 12px;
+}

@@ -44,6 +44,14 @@ public class LikesHandler {
         for (User user : users) {
             if (user.getAuth0Id().equals(currentUser)) continue; // skip the currentUser
             count++;
+            if (count == 2 && total > 3) {
+                likedString
+                        .append(user.getNickname())
+                        .append(" and ")
+                        .append(total - 2)
+                        .append(" others ");
+                break;
+            }
             likedString
                     .append(user.getNickname())
                     .append(getJoinString(total - count));
