@@ -78,5 +78,5 @@ jobs:
 
       - name: Test with maven
         run: |
-          printenv POSTGRES_URL
+          printenv GITHUB_ACTIONS
           mvn spring-boot:run & sleep 15 ; mvn test
