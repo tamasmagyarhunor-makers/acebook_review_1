@@ -64,14 +64,12 @@ jobs:
       - name: Setup db and run server in background
         env:
           PGPASSWORD: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
         run: |
           PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres acebook_springboot_development
           PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres acebook_springboot_test
 
       - name: Test with maven
         run: |
-          export POSTGRES_URL="postgresql://localhost:5432/acebook_springboot_development"
+          export POSTGRES_URL="postgresql://localhost:5432/acebook_springboot_test"
           printenv POSTGRES_URL
           mvn spring-boot:run & sleep 15 ; mvn test
