@@ -18,7 +18,6 @@ jobs:
           POSTGRES_DB: postgres
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_URL: postgresql://localhost:5432/acebook_springboot_development
         ports:
           - 5432:5432
         # Give PostgreSQL some time to initialize
