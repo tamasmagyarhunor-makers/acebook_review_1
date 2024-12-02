@@ -45,6 +45,7 @@ jobs:
       - name: Test Chrome version
         run: |
           chrome --version
+          printenv POSTGRES_URL
 
       - name: Install playwright
         run: |
