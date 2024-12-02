@@ -15,12 +15,9 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_HOST_AUTH_METHOD: trust
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
           POSTGRES_DB: postgres
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_URL: postgresql://localhost:5432/acebook_springboot_development
         ports:
           - 5432:5432
         # Give PostgreSQL some time to initialize
@@ -69,9 +66,6 @@ jobs:
           PGPASSWORD: postgres
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_URL: postgresql://localhost:5432/acebook_springboot_development
         run: |
           PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres acebook_springboot_development
           PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres acebook_springboot_test
