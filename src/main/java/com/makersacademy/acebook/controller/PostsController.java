@@ -21,8 +21,6 @@ public class PostsController {
     @Autowired
     PostRepository repository;
     @Autowired
-    LikeRepository likeRepository;
-    @Autowired
     UserRepository userRepository;
 
     private String getCurrentUser() {
