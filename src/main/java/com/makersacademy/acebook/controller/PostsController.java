@@ -26,7 +26,6 @@ public class PostsController {
     PostRepository repository;
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     LikeRepository likeRepository;
     @Autowired
