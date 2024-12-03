@@ -35,18 +35,10 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Install Chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          install-chromedriver: true
-      - name: Test Chrome version
-        run: |
-          chrome --version
-
       - name: Install playwright
         run: |
           mvn -B install -D skipTests -ntp
-          mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
+          mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps chromium"
 
       - name: Set Auth0 environment variables
         run: |
